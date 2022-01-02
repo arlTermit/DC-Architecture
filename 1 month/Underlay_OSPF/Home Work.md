@@ -497,7 +497,6 @@ interface Ethernet0/0
 
 ip route 0.0.0.0 0.0.0.0 10.0.2.1
 
-
 </code></pre>
 </details>
 
