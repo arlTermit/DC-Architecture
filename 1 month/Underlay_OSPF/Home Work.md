@@ -492,12 +492,37 @@ ip route 0.0.0.0 0.0.0.0 10.0.0.1
 <summary>R-11</summary>
 <pre><code>
 
+interface Ethernet0/0
+ ip address 10.0.2.2 255.255.255.252
+
+ip route 0.0.0.0 0.0.0.0 10.0.2.1
+
+
 </code></pre>
 </details>
 
 <details>
 <summary>R-10</summary>
 <pre><code>
+
+interface Port-channel1
+ switchport access vlan 2
+ switchport mode access
+!
+interface Ethernet0/0
+ switchport access vlan 2
+ switchport mode access
+ channel-group 1 mode active
+!
+interface Ethernet0/1
+ switchport access vlan 2
+ switchport mode access
+ channel-group 1 mode active
+
+interface Vlan2
+ ip address 10.0.1.2 255.255.255.0
+
+ip route 0.0.0.0 0.0.0.0 10.0.1.1
 
 </code></pre>
 </details>
