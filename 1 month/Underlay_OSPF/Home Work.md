@@ -14,11 +14,10 @@
 
 ! В выводе убраны все настройки не относящиеся к поставленной задаче.
 
-Настройка R-8:
- <details>
+Настройка маршрутизатора R-8:
+<details>
 <summary>R-8</summary>
 <pre><code>
-Router>en
 Router#show run
 
 interface Loopback0
@@ -47,6 +46,70 @@ router ospf 1
  network 10.10.10.2 0.0.0.1 area 0
  network 10.10.10.4 0.0.0.1 area 0
 
-Router#
+</code></pre>
+</details>
+
+Настройка SPINE коммутаторов:
+<details>
+<summary>SPINE-1</summary>
+<pre><code>
+SPINE-1# show run
+
+...
+...
+...
+
+cfs eth distribute
+feature ospf
+feature interface-vlan
+feature hsrp
+feature lacp
+feature vpc
+
+...
+...
+...
+
+interface Ethernet1/1
+  no switchport
+  ip address 10.10.10.1/31
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/3
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/4
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+...
+...
+...
+
+interface loopback0
+  ip address 1.1.1.1/32
+  ip router ospf UNDERLAY area 0.0.0.0
+cli alias name wr copy running-config startup-config
+line console
+line vty
+boot nxos bootflash:/nxos.9.2.2.bin
+router ospf UNDERLAY
+  router-id 1.1.1.1
+  log-adjacency-changes detail
+
 </code></pre>
 </details>
