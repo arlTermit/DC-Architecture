@@ -526,7 +526,7 @@ ip route 0.0.0.0 0.0.0.0 10.0.1.1
 </code></pre>
 </details>
 
-Статус VPC и VVRP c NXOS-5
+Статус VPC и VRRP c NXOS-5
 <details>
 <summary>VPC</summary>
 <pre><code>
