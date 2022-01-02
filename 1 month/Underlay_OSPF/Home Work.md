@@ -242,7 +242,7 @@ router ospf UNDERLAY
 </details>
 
 <details>
-<summary>NXOS-6</summary>
+<summary>NXOS-5</summary>
 <pre><code>
 
 feature vrrp
@@ -334,6 +334,101 @@ router ospf UNDERLAY
 
 </code></pre>
 </details>
+
+<details>
+<summary>NXOS-6</summary>
+<pre><code>
+
+feature vrrp
+cfs eth distribute
+feature ospf
+feature interface-vlan
+feature hsrp
+feature lacp
+feature vpc
+
+vlan 1-2
+vlan 2
+  name Client-Vlan2
+
+ip prefix-list redistribute_list seq 5 permit 10.0.1.0/24
+route-map OSPF-redistribute permit 10
+  match ip address prefix-list redistribute_list
+vrf context VPC
+vrf context management
+vpc domain 1
+  role priority 1
+  peer-keepalive destination 10.200.100.1 source 10.200.100.2 vrf VPC
+
+
+interface Vlan1
+
+interface Vlan2
+  no shutdown
+  ip address 10.0.1.253/24
+  vrrp 2
+    priority 2
+    address 10.0.1.1
+    no shutdown
+
+interface port-channel1
+  description *** VPC PEERLINK ***
+  switchport mode trunk
+  spanning-tree port type network
+  vpc peer-link
+
+interface port-channel2
+  switchport access vlan 2
+  vpc 1
+
+interface Ethernet1/1
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  switchport access vlan 2
+  channel-group 2 mode active
+
+interface Ethernet1/3
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/4
+  description *** VPC KEEPALIVE LINK ***
+  no switchport
+  vrf member VPC
+  ip address 10.200.100.2/24
+  no shutdown
+
+interface Ethernet1/5
+  switchport mode trunk
+  channel-group 1 mode active
+
+interface Ethernet1/6
+  switchport mode trunk
+  channel-group 1 mode active
+
+interface loopback0
+  ip address 1.1.1.6/32
+  ip router ospf UNDERLAY area 0.0.0.0
+cli alias name wr copy running-config startup-config
+line console
+line vty
+boot nxos bootflash:/nxos.9.2.2.bin
+router ospf UNDERLAY
+  router-id 1.1.1.6
+  redistribute direct route-map OSPF-redistribute
+  log-adjacency-changes detail
+
+</code></pre>
+</details>
+
 
 <details>
 <summary>NXOS-7</summary>
