@@ -190,3 +190,74 @@ router ospf UNDERLAY
 
 </code></pre>
 </details>
+
+Настройка LEAF коммутаторов:
+
+<details>
+<summary>LEAF-1</summary>
+<pre><code>
+
+</code></pre>
+</details>
+
+<details>
+<summary>LEAF-2</summary>
+<pre><code>
+
+</code></pre>
+</details>
+
+<details>
+<summary>LEAF-3</summary>
+<pre><code>
+
+</code></pre>
+</details>
+
+<details>
+<summary>LEAF-4</summary>
+<pre><code>
+
+feature ospf
+feature interface-vlan
+feature hsrp
+feature lacp
+feature vpc
+
+ip prefix-list redistribute_list seq 5 permit 10.0.0.0/30
+route-map OSPF-redistribute permit 10
+  match ip address prefix-list redistribute_list
+
+interface Ethernet1/1
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  no switchport
+  ip address 10.0.0.1/30
+  no shutdown
+
+interface Ethernet1/3
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+  interface loopback0
+  ip address 1.1.1.4/32
+  ip router ospf UNDERLAY area 0.0.0.0
+cli alias name wr copy running-config startup-config
+line console
+line vty
+boot nxos bootflash:/nxos.9.2.2.bin
+router ospf UNDERLAY
+  router-id 1.1.1.4
+  redistribute direct route-map OSPF-redistribute
+  log-adjacency-changes detail
+
+</code></pre>
+</details>
