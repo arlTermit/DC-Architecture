@@ -525,3 +525,59 @@ ip route 0.0.0.0 0.0.0.0 10.0.1.1
 
 </code></pre>
 </details>
+
+Статус VPC и VVRP c NXOS-5
+<details>
+<summary>VPC</summary>
+<pre><code>
+
+(*) - local vPC is down, forwarding via vPC peer-link
+
+vPC domain id                     : 1
+Peer status                       : peer adjacency formed ok
+vPC keep-alive status             : peer is alive
+Configuration consistency status  : success
+Per-vlan consistency status       : success
+Type-2 consistency status         : success
+vPC role                          : secondary
+Number of vPCs configured         : 1
+Peer Gateway                      : Disabled
+Dual-active excluded VLANs        : -
+Graceful Consistency Check        : Enabled
+Auto-recovery status              : Disabled
+Delay-restore status              : Timer is off.(timeout = 30s)
+Delay-restore SVI status          : Timer is off.(timeout = 10s)
+Operational Layer3 Peer-router    : Disabled
+
+vPC Peer-link status
+---------------------------------------------------------------------
+id    Port   Status Active vlans
+--    ----   ------ -------------------------------------------------
+1     Po1    up     1-2
+
+
+vPC status
+----------------------------------------------------------------------------
+Id    Port          Status Consistency Reason                Active vlans
+--    ------------  ------ ----------- ------                ---------------
+1     Po2           up     success     success               2
+
+
+</code></pre>
+</details>
+
+<details>
+<summary>VRRP</summary>
+<pre><code>
+Vlan2 - Group 2 (IPV4)
+     State is Backup
+     Virtual IP address is 10.0.1.1
+     Priority 1, Configured 1
+     Forwarding threshold(for VPC), lower: 1 upper: 1
+     Advertisement interval 1
+     Preemption enabled
+     Virtual MAC address is 0000.5e00.0102
+     Master router is 10.0.1.253
+
+</code></pre>
+</details>
