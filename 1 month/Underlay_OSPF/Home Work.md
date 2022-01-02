@@ -102,6 +102,7 @@ router ospf UNDERLAY
 </code></pre>
 </details>
 
+<details>
 <summary>SPINE-2</summary>
 <pre><code>
 SPINE-2# show run
@@ -152,6 +153,7 @@ router ospf UNDERLAY
 </code></pre>
 </details>
 
+<details>
 <summary>SPINE-3</summary>
 <pre><code>
 
