@@ -473,3 +473,31 @@ router ospf UNDERLAY
 
 </code></pre>
 </details>
+
+
+Настройка клиентских устройств:
+<details>
+<summary>R-9</summary>
+<pre><code>
+
+interface Ethernet0/0
+ ip address 10.0.0.2 255.255.255.252
+
+ip route 0.0.0.0 0.0.0.0 10.0.0.1
+
+</code></pre>
+</details>
+
+<details>
+<summary>R-11</summary>
+<pre><code>
+
+</code></pre>
+</details>
+
+<details>
+<summary>R-10</summary>
+<pre><code>
+
+</code></pre>
+</details>
