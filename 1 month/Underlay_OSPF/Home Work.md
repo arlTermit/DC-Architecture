@@ -101,3 +101,90 @@ router ospf UNDERLAY
 
 </code></pre>
 </details>
+
+<summary>SPINE-2</summary>
+<pre><code>
+SPINE-2# show run
+feature ospf
+feature interface-vlan
+feature hsrp
+feature lacp
+feature vpc
+
+interface Ethernet1/1
+  no switchport
+  ip address 10.10.10.3/31
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/3
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/4
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface loopback0
+  ip address 1.1.1.2/32
+  ip router ospf UNDERLAY area 0.0.0.0
+cli alias name wr copy running-config startup-config
+line console
+line vty
+boot nxos bootflash:/nxos.9.2.2.bin
+router ospf UNDERLAY
+  router-id 1.1.1.2
+  log-adjacency-changes detail
+
+</code></pre>
+</details>
+
+<summary>SPINE-3</summary>
+<pre><code>
+
+SPINE-3# show run
+feature ospf
+feature interface-vlan
+feature hsrp
+feature lacp
+feature vpc
+
+interface Ethernet1/1
+  no switchport
+  ip address 10.10.10.5/31
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface loopback0
+  ip address 1.1.1.3/32
+  ip router ospf UNDERLAY area 0.0.0.0
+cli alias name wr copy running-config startup-config
+line console
+line vty
+boot nxos bootflash:/nxos.9.2.2.bin
+router ospf UNDERLAY
+  router-id 1.1.1.3
+  log-adjacency-changes detail
+
+</code></pre>
+</details>
