@@ -51,3 +51,160 @@ router bgp 64512
 
 </code></pre>
 </details>
+
+Настройка SPINE коммутаторов:
+
+<details>
+<summary>NXOS-1</summary>
+<pre><code>
+
+feature ospf
+feature bgp
+feature interface-vlan
+feature hsrp
+feature lacp
+feature vpc
+
+interface Ethernet1/1
+  no switchport
+  ip address 10.10.10.1/31
+  no shutdown
+
+interface Ethernet1/2
+  no switchport
+  medium p2p
+  ip address 10.1.4.0/31
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/3
+  no switchport
+  medium p2p
+  ip address 10.1.5.0/31
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/4
+  no switchport
+  medium p2p
+  ip address 10.1.6.0/31
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface loopback0
+  ip address 1.1.1.1/32
+  ip router ospf UNDERLAY area 0.0.0.0
+cli alias name wr copy running-config startup-config
+line console
+line vty
+boot nxos bootflash:/nxos.9.2.2.bin
+router ospf UNDERLAY
+  router-id 1.1.1.1
+  log-adjacency-changes detail
+router bgp 64515
+  router-id 1.1.1.1
+  bestpath as-path multipath-relax
+  log-neighbor-changes
+  address-family ipv4 unicast
+    network 1.1.1.1/32
+  template peer LEAF
+    address-family ipv4 unicast
+      maximum-prefix 100
+  neighbor 10.1.4.1
+    inherit peer LEAF
+    remote-as 64517
+  neighbor 10.1.5.1
+    inherit peer LEAF
+    remote-as 64518
+  neighbor 10.1.6.1
+    inherit peer LEAF
+    remote-as 64519
+  neighbor 10.10.10.0
+    remote-as 64512
+    address-family ipv4 unicast
+      maximum-prefix 200
+
+</code></pre>
+</details>
+
+<details>
+<summary>NXOS-2</summary>
+<pre><code>
+
+feature ospf
+feature bgp
+feature interface-vlan
+feature hsrp
+feature lacp
+feature vpc
+
+interface Ethernet1/1
+  no switchport
+  ip address 10.10.10.3/31
+  no shutdown
+
+interface Ethernet1/2
+  no switchport
+  medium p2p
+  ip address 10.2.4.0/31
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/3
+  no switchport
+  medium p2p
+  ip address 10.2.5.0/31
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/4
+  no switchport
+  medium p2p
+  ip address 10.2.6.0/31
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface loopback0
+  ip address 1.1.1.2/32
+  ip router ospf UNDERLAY area 0.0.0.0
+cli alias name wr copy running-config startup-config
+line console
+line vty
+boot nxos bootflash:/nxos.9.2.2.bin
+router ospf UNDERLAY
+  router-id 1.1.1.2
+  log-adjacency-changes detail
+router bgp 64516
+  router-id 1.1.1.2
+  bestpath as-path multipath-relax
+  log-neighbor-changes
+  address-family ipv4 unicast
+    network 1.1.1.2/32
+    redistribute direct route-map direct
+    maximum-paths 2
+  template peer LEAF
+    address-family ipv4 unicast
+      maximum-prefix 100
+  neighbor 10.2.4.1
+    inherit peer LEAF
+    remote-as 64517
+  neighbor 10.2.5.1
+    inherit peer LEAF
+    remote-as 64518
+  neighbor 10.2.6.1
+    inherit peer LEAF
+    remote-as 64519
+  neighbor 10.10.10.2
+    remote-as 64512
+    address-family ipv4 unicast
+      maximum-prefix 200
+
+</code></pre>
+</details>
+
+<details>
+<summary>NXOS-3</summary>
+<pre><code>
+
+</code></pre>
+</details>
