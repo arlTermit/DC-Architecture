@@ -617,3 +617,29 @@ O E2     10.0.2.0/30 [110/20] via 10.10.10.5, 00:26:52, Ethernet0/2
 
 </code></pre>
 </details>
+
+<details>
+<summary>Доступность клиентов по ICMP</summary>
+<pre><code>
+ping 10.0.0.2 re 100
+Type escape sequence to abort.
+Sending 100, 100-byte ICMP Echos to 10.0.0.2, timeout is 2 seconds:
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Success rate is 100 percent (100/100), round-trip min/avg/max = 6/12/28 ms
+
+ping 10.0.1.2 re 100
+Type escape sequence to abort.
+Sending 100, 100-byte ICMP Echos to 10.0.1.2, timeout is 2 seconds:
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!.!!!!!!!!!!!!!!
+Success rate is 100 percent (100/100), round-trip min/avg/max = 16/21/44 ms
+
+ping 10.0.2.2 re 100
+Type escape sequence to abort.
+Sending 100, 100-byte ICMP Echos to 10.0.2.2, timeout is 2 seconds:
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+</code></pre>
+</details>
