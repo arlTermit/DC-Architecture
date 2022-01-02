@@ -628,6 +628,7 @@ Sending 100, 100-byte ICMP Echos to 10.0.0.2, timeout is 2 seconds:
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Success rate is 100 percent (100/100), round-trip min/avg/max = 6/12/28 ms
 
+
 ping 10.0.1.2 re 100
 Type escape sequence to abort.
 Sending 100, 100-byte ICMP Echos to 10.0.1.2, timeout is 2 seconds:
