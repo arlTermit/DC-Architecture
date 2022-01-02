@@ -16,3 +16,38 @@
 4. Для подключения маршрутизатора R-10 используется протокол VRRP.
 
 ! В выводе убраны все настройки не относящиеся к поставленной задаче.
+
+Настройка маршрутизатора R-8:
+<details>
+<summary>R-8</summary>
+<pre><code>
+
+interface Loopback0
+ ip address 1.1.1.255 255.255.255.255
+!
+interface Ethernet0/0
+ ip address 10.10.10.0 255.255.255.254
+!
+interface Ethernet0/1
+ ip address 10.10.10.2 255.255.255.254
+!
+interface Ethernet0/2
+ ip address 10.10.10.4 255.255.255.254
+!
+interface Ethernet0/3
+ no ip address
+!
+router bgp 64512
+ bgp router-id 1.1.1.255
+ bgp log-neighbor-changes
+ network 1.1.1.255 mask 255.255.255.255
+ neighbor 10.10.10.1 remote-as 64515
+ neighbor 10.10.10.1 soft-reconfiguration inbound
+ neighbor 10.10.10.3 remote-as 64516
+ neighbor 10.10.10.3 soft-reconfiguration inbound
+ neighbor 10.10.10.5 remote-as 64513
+ neighbor 10.10.10.5 soft-reconfiguration inbound
+
+
+</code></pre>
+</details>
