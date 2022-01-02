@@ -18,7 +18,6 @@
 <details>
 <summary>R-8</summary>
 <pre><code>
-Router#show run
 
 interface Loopback0
  ip address 1.1.1.255 255.255.255.255
@@ -578,6 +577,43 @@ Vlan2 - Group 2 (IPV4)
      Preemption enabled
      Virtual MAC address is 0000.5e00.0102
      Master router is 10.0.1.253
+
+</code></pre>
+</details>
+
+Проверка с R-8:
+<details>
+<summary>show ip ospf neighbor</summary>
+<pre><code>
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+1.1.1.3           1   FULL/BDR        00:00:32    10.10.10.5      Ethernet0/2
+1.1.1.2           1   FULL/BDR        00:00:35    10.10.10.3      Ethernet0/1
+1.1.1.1           1   FULL/BDR        00:00:36    10.10.10.1      Ethernet0/0
+
+</code></pre>
+</details>
+
+<details>
+<summary>show ip route ospf</summary>
+<pre><code>
+1.0.0.0/32 is subnetted, 8 subnets
+O        1.1.1.1 [110/11] via 10.10.10.1, 00:26:41, Ethernet0/0
+O        1.1.1.2 [110/11] via 10.10.10.3, 00:27:13, Ethernet0/1
+O        1.1.1.3 [110/11] via 10.10.10.5, 00:26:52, Ethernet0/2
+O        1.1.1.4 [110/51] via 10.10.10.3, 00:18:08, Ethernet0/1
+           [110/51] via 10.10.10.1, 00:17:58, Ethernet0/0
+O        1.1.1.5 [110/51] via 10.10.10.3, 00:27:02, Ethernet0/1
+           [110/51] via 10.10.10.1, 00:26:31, Ethernet0/0
+O        1.1.1.6 [110/51] via 10.10.10.3, 00:27:02, Ethernet0/1
+           [110/51] via 10.10.10.1, 00:26:41, Ethernet0/0
+O        1.1.1.7 [110/51] via 10.10.10.5, 00:26:52, Ethernet0/2
+10.0.0.0/8 is variably subnetted, 9 subnets, 4 masks
+O E2     10.0.0.0/30 [110/20] via 10.10.10.3, 00:18:08, Ethernet0/1
+               [110/20] via 10.10.10.1, 00:17:58, Ethernet0/0
+O E2     10.0.1.0/24 [110/20] via 10.10.10.3, 00:27:02, Ethernet0/1
+               [110/20] via 10.10.10.1, 00:26:41, Ethernet0/0
+O E2     10.0.2.0/30 [110/20] via 10.10.10.5, 00:26:52, Ethernet0/2
 
 </code></pre>
 </details>
