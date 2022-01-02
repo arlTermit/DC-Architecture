@@ -12,15 +12,15 @@
 3.
 4.
 
+! В выводе убраны все настройки не относящиеся к поставленной задаче.
+
 Настройка R-8:
  <details>
 <summary>R-8</summary>
 <pre><code>
 Router>en
 Router#show run
-Building configuration...
 
-!
 interface Loopback0
  ip address 1.1.1.255 255.255.255.255
 !
@@ -46,9 +46,6 @@ router ospf 1
  network 10.10.10.0 0.0.0.1 area 0
  network 10.10.10.2 0.0.0.1 area 0
  network 10.10.10.4 0.0.0.1 area 0
-!
-
-end
 
 Router#
 </code></pre>
