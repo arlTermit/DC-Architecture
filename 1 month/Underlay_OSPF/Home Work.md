@@ -581,6 +581,7 @@ Vlan2 - Group 2 (IPV4)
 </code></pre>
 </details>
 
+<details>
 <summary>LACP</summary>
 <pre><code>
 show port-channel summary
