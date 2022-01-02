@@ -54,22 +54,17 @@ router ospf 1
 <summary>SPINE-1</summary>
 <pre><code>
 SPINE-1# show run
-
 ...
 ...
 ...
-
-cfs eth distribute
 feature ospf
 feature interface-vlan
 feature hsrp
 feature lacp
 feature vpc
-
 ...
 ...
 ...
-
 interface Ethernet1/1
   no switchport
   ip address 10.10.10.1/31
@@ -99,7 +94,6 @@ interface Ethernet1/4
 ...
 ...
 ...
-
 interface loopback0
   ip address 1.1.1.1/32
   ip router ospf UNDERLAY area 0.0.0.0
