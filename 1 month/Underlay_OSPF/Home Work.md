@@ -242,7 +242,7 @@ router ospf UNDERLAY
 </details>
 
 <details>
-<summary>NXOS-5</summary>
+<summary>NXOS-6</summary>
 <pre><code>
 
 feature vrrp
