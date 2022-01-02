@@ -51,7 +51,7 @@ router ospf 1
 
 Настройка SPINE коммутаторов:
 <details>
-<summary>SPINE-1</summary>
+<summary>NXOS-1</summary>
 <pre><code>
 SPINE-1# show run
 
@@ -103,7 +103,7 @@ router ospf UNDERLAY
 </details>
 
 <details>
-<summary>SPINE-2</summary>
+<summary>NXOS-2</summary>
 <pre><code>
 SPINE-2# show run
 feature ospf
@@ -154,7 +154,7 @@ router ospf UNDERLAY
 </details>
 
 <details>
-<summary>SPINE-3</summary>
+<summary>NXOS-3</summary>
 <pre><code>
 
 SPINE-3# show run
