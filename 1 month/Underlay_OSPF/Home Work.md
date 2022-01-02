@@ -526,7 +526,7 @@ ip route 0.0.0.0 0.0.0.0 10.0.1.1
 </code></pre>
 </details>
 
-Статус VPC и VRRP c NXOS-5
+Статус VPC, LACP и VRRP c NXOS-5
 <details>
 <summary>VPC</summary>
 <pre><code>
@@ -577,6 +577,27 @@ Vlan2 - Group 2 (IPV4)
      Preemption enabled
      Virtual MAC address is 0000.5e00.0102
      Master router is 10.0.1.253
+
+</code></pre>
+</details>
+
+<summary>LACP</summary>
+<pre><code>
+show port-channel summary
+Flags:  D - Down        P - Up in port-channel (members)
+        I - Individual  H - Hot-standby (LACP only)
+        s - Suspended   r - Module-removed
+        b - BFD Session Wait
+        S - Switched    R - Routed
+        U - Up (port-channel)
+        p - Up in delay-lacp mode (member)
+        M - Not in use. Min-links not met
+--------------------------------------------------------------------------------
+Group Port-       Type     Protocol  Member Ports
+      Channel
+--------------------------------------------------------------------------------
+1     Po1(SU)     Eth      LACP      Eth1/5(P)    Eth1/6(P)
+2     Po2(SU)     Eth      LACP      Eth1/2(P)
 
 </code></pre>
 </details>
