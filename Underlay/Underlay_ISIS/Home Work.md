@@ -493,3 +493,113 @@ interface Ethernet1/4
 
 </code></pre>
 </details>
+
+Маршрутные таблицы маршрутизаторов R-1 и R-2:
+
+<details>
+<summary>show ip route R-2</summary>
+<pre><code>
+
+1.0.0.0/32 is subnetted, 9 subnets
+i L2     1.1.1.1 [115/11] via 10.10.11.1, 01:09:28, Ethernet0/0
+i L2     1.1.1.2 [115/11] via 10.10.11.3, 01:09:28, Ethernet0/1
+i L2     1.1.1.3 [115/11] via 10.10.11.5, 01:09:28, Ethernet0/2
+i L2     1.1.1.4 [115/90] via 10.10.11.3, 01:09:28, Ethernet0/1
+           [115/90] via 10.10.11.1, 01:09:28, Ethernet0/0
+i L2     1.1.1.5 [115/51] via 10.10.11.3, 01:09:28, Ethernet0/1
+           [115/51] via 10.10.11.1, 01:09:28, Ethernet0/0
+i L2     1.1.1.6 [115/51] via 10.10.11.3, 01:09:28, Ethernet0/1
+           [115/51] via 10.10.11.1, 01:09:28, Ethernet0/0
+i L2     1.1.1.7 [115/51] via 10.10.11.5, 01:09:28, Ethernet0/2
+C        1.1.1.254 is directly connected, Loopback0
+i L2     1.1.1.255 [115/60] via 10.10.11.5, 01:09:28, Ethernet0/2
+             [115/60] via 10.10.11.3, 01:09:28, Ethernet0/1
+             [115/60] via 10.10.11.1, 01:09:28, Ethernet0/0
+10.0.0.0/8 is variably subnetted, 11 subnets, 3 masks
+i L2     10.0.0.0/24 [115/60] via 10.10.11.3, 01:09:28, Ethernet0/1
+               [115/60] via 10.10.11.1, 01:09:28, Ethernet0/0
+i L2     10.0.2.0/24 [115/60] via 10.10.11.5, 01:09:28, Ethernet0/2
+i L2     10.10.10.0/31 [115/50] via 10.10.11.1, 01:09:28, Ethernet0/0
+i L2     10.10.10.2/31 [115/50] via 10.10.11.3, 01:09:28, Ethernet0/1
+i L2     10.10.10.4/31 [115/50] via 10.10.11.5, 01:09:28, Ethernet0/2
+C        10.10.11.0/31 is directly connected, Ethernet0/0
+L        10.10.11.0/32 is directly connected, Ethernet0/0
+C        10.10.11.2/31 is directly connected, Ethernet0/1
+L        10.10.11.2/32 is directly connected, Ethernet0/1
+C        10.10.11.4/31 is directly connected, Ethernet0/2
+L        10.10.11.4/32 is directly connected, Ethernet0/2
+172.17.0.0/24 is subnetted, 2 subnets
+i L2     172.17.0.0 [115/60] via 10.10.11.3, 01:09:28, Ethernet0/1
+              [115/60] via 10.10.11.1, 01:09:28, Ethernet0/0
+i L2     172.17.1.0 [115/60] via 10.10.11.3, 01:09:28, Ethernet0/1
+              [115/60] via 10.10.11.1, 01:09:28, Ethernet0/0
+
+</code></pre>
+</details>
+
+<details>
+<summary>show ip route R-1</summary>
+<pre><code>
+
+1.0.0.0/32 is subnetted, 9 subnets
+i L2     1.1.1.1 [115/11] via 10.10.10.1, 01:11:27, Ethernet0/0
+i L2     1.1.1.2 [115/11] via 10.10.10.3, 01:11:27, Ethernet0/1
+i L2     1.1.1.3 [115/11] via 10.10.10.5, 01:11:37, Ethernet0/2
+i L2     1.1.1.4 [115/90] via 10.10.10.3, 01:11:27, Ethernet0/1
+           [115/90] via 10.10.10.1, 01:11:27, Ethernet0/0
+i L2     1.1.1.5 [115/51] via 10.10.10.3, 01:11:27, Ethernet0/1
+           [115/51] via 10.10.10.1, 01:11:27, Ethernet0/0
+i L2     1.1.1.6 [115/51] via 10.10.10.3, 01:11:27, Ethernet0/1
+           [115/51] via 10.10.10.1, 01:11:27, Ethernet0/0
+i L2     1.1.1.7 [115/51] via 10.10.10.5, 01:11:37, Ethernet0/2
+i L2     1.1.1.254 [115/60] via 10.10.10.5, 01:11:07, Ethernet0/2
+             [115/60] via 10.10.10.3, 01:11:07, Ethernet0/1
+             [115/60] via 10.10.10.1, 01:11:07, Ethernet0/0
+C        1.1.1.255 is directly connected, Loopback0
+10.0.0.0/8 is variably subnetted, 11 subnets, 3 masks
+i L2     10.0.0.0/24 [115/60] via 10.10.10.3, 01:11:27, Ethernet0/1
+               [115/60] via 10.10.10.1, 01:11:27, Ethernet0/0
+i L2     10.0.2.0/24 [115/60] via 10.10.10.5, 01:11:37, Ethernet0/2
+C        10.10.10.0/31 is directly connected, Ethernet0/0
+L        10.10.10.0/32 is directly connected, Ethernet0/0
+C        10.10.10.2/31 is directly connected, Ethernet0/1
+L        10.10.10.2/32 is directly connected, Ethernet0/1
+C        10.10.10.4/31 is directly connected, Ethernet0/2
+L        10.10.10.4/32 is directly connected, Ethernet0/2
+i L2     10.10.11.0/31 [115/50] via 10.10.10.1, 01:11:27, Ethernet0/0
+i L2     10.10.11.2/31 [115/50] via 10.10.10.3, 01:11:27, Ethernet0/1
+i L2     10.10.11.4/31 [115/50] via 10.10.10.5, 01:11:37, Ethernet0/2
+172.17.0.0/24 is subnetted, 2 subnets
+i L2     172.17.0.0 [115/60] via 10.10.10.3, 01:11:27, Ethernet0/1
+              [115/60] via 10.10.10.1, 01:11:27, Ethernet0/0
+i L2     172.17.1.0 [115/60] via 10.10.10.3, 01:11:27, Ethernet0/1
+              [115/60] via 10.10.10.1, 01:11:27, Ethernet0/0
+
+</code></pre>
+</details>
+
+<details>
+<summary>show isis neighbors R-1</summary>
+<pre><code>
+
+Tag 1:
+System Id      Type Interface   IP Address      State Holdtime Circuit Id
+NXOS-3         L2   Et0/0       10.10.10.1      UP    27       01
+NXOS-4         L2   Et0/1       10.10.10.3      UP    23       01
+NX-5           L2   Et0/2       10.10.10.5      UP    21       01
+
+</code></pre>
+</details>
+
+<details>
+<summary>show isis neighbors R-2</summary>
+<pre><code>
+
+Tag 1:
+System Id      Type Interface   IP Address      State Holdtime Circuit Id
+NXOS-3         L2   Et0/0       10.10.11.1      UP    26       01
+NXOS-4         L2   Et0/1       10.10.11.3      UP    26       01
+NX-5           L2   Et0/2       10.10.11.5      UP    26       01
+
+</code></pre>
+</details>
