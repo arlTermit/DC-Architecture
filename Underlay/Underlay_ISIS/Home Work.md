@@ -603,3 +603,56 @@ NX-5           L2   Et0/2       10.10.11.5      UP    26       01
 
 </code></pre>
 </details>
+
+Проверка доступности
+<details>
+<summary>Доступность с R-10</summary>
+<pre><code>
+R-10#show ip int bri
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.0.0.2        YES manual up                    up
+Ethernet0/1                unassigned      YES unset  administratively down down
+Ethernet0/2                unassigned      YES unset  administratively down down
+Ethernet0/3                unassigned      YES unset  administratively down down
+R-10#ping 172.17.0.2 re 2
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 172.17.0.2, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 15/23/31 ms
+R-10#
+R-10#ping 172.17.1.2 re 2
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 172.17.1.2, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 13/16/20 ms
+R-10#ping 10.0.2.2 re 2
+Type escape sequence to abort.
+Sending 2, 100-byte ICMP Echos to 10.0.2.2, timeout is 2 seconds:
+!!
+Success rate is 100 percent (2/2), round-trip min/avg/max = 20/24/28 ms
+R-10#
+
+R-10#traceroute 172.17.0.2
+Type escape sequence to abort.
+Tracing the route to
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.0.0.1 6 msec 5 msec 1 msec
+  2 1.1.1.1 11 msec 11 msec
+    1.1.1.2 17 msec
+  3 1.1.1.5 33 msec 11 msec 17 msec
+  4 172.17.0.2 25 msec 20 msec *
+R-10#
+
+R-10#traceroute 10.0.2.2
+Type escape sequence to abort.
+Tracing the route to 10.0.2.2
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.0.0.1 6 msec 3 msec 2 msec
+  2 1.1.1.1 6 msec 7 msec 9 msec
+  3 10.10.11.0 11 msec 12 msec
+    10.10.10.0 8 msec
+  4 10.10.10.5 18 msec
+    10.10.11.5 17 msec 15 msec
+
+</code></pre>
+</details>
