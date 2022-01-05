@@ -95,11 +95,10 @@ router isis 1
  log-adjacency-changes
  maximum-paths 8
 
-
 </code></pre>
 </details>
 
-Настройка маршрутизаторов NX-5 NX-9:
+Настройка маршрутизаторов NX-5 NX-9 Area 10:
 <details>
 <summary>NX-5</summary>
 <pre><code>
@@ -157,7 +156,6 @@ route-map ISIS-redistribute permit 10
   match ip address prefix-list redistribute_list
 vrf context management
 
-
 interface Ethernet1/1
   no switchport
   medium p2p
@@ -186,6 +184,42 @@ interface Ethernet1/2
     redistribute direct route-map ISIS-redistribute
     log-adjacency-changes
 
+</code></pre>
+</details>
+
+  Настройка маршрутизаторов NX-3 - 4 NX-6 - 8 Area 10:
+
+<details>
+<summary>NX-3</summary>
+<pre><code>
+
+</code></pre>
+</details>
+
+<details>
+<summary>NX-4</summary>
+<pre><code>
+
+</code></pre>
+</details>
+
+<details>
+<summary>NX-6</summary>
+<pre><code>
+
+</code></pre>
+</details>
+
+<details>
+<summary>NX-7</summary>
+<pre><code>
+
+</code></pre>
+</details>
+
+<details>
+<summary>NX-8</summary>
+<pre><code>
 
 </code></pre>
 </details>
