@@ -1195,3 +1195,43 @@ LEAF-6# show vrrp detail
           Master router is Local
 </code></pre>
 </details>
+---------------------------------------------------------------------------
+Проверка доступности:
+<details>
+<summary>С R-9</summary>
+<pre><code>
+R-9>ping 10.0.1.2
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.0.1.2, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 28/40/57 ms
+R-9>tracer
+R-9>traceroute 10.0.1.2
+Type escape sequence to abort.
+Tracing the route to 10.0.1.2
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.0.0.1 5 msec 3 msec 2 msec
+  2 10.1.4.0 11 msec
+    10.1.4.0 5 msec
+  3 10.2.5.1 26 msec
+    10.2.6.1 17 msec 11 msec
+  4 10.0.1.2 53 msec 24 msec *
+
+</code></pre>
+</details>
+
+<details>
+<summary>С R-10</summary>
+<pre><code>
+R-10>ping 10.0.0.2
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.0.0.2, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 23/25/27 ms
+R-10>ping 10.0.2.2
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.0.2.2, timeout is 2 seconds:
+.!!!!
+Success rate is 80 percent (4/5), round-trip min/avg/max = 34/43/57 ms
+</code></pre>
+</details>
