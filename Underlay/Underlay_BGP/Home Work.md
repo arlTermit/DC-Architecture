@@ -1196,7 +1196,9 @@ LEAF-6# show vrrp detail
 </code></pre>
 </details>
 ---------------------------------------------------------------------------
-Проверка доступности:
+
+<summary>Проверка доступности:</summary>
+
 <details>
 <summary>С R-9</summary>
 <pre><code>
