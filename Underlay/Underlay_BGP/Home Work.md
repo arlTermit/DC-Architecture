@@ -70,6 +70,7 @@ Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State
 10.10.10.5      4        64513      15      24       20    0    0 00:07:23        5
 
 </code></pre>
+</details>
 
 <details>
 <summary>Маршрутная таблица с R-8</summary>
