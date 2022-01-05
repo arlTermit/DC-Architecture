@@ -187,11 +187,12 @@ interface Ethernet1/2
 </code></pre>
 </details>
 
-  Настройка маршрутизаторов NX-3 - 4 NX-6 - 8 Area 10:
+  Настройка маршрутизаторов NX-3 - 4 NX-6 - 8 Area 1:
 
 <details>
 <summary>NX-3</summary>
 <pre><code>
+feature isis
 
 </code></pre>
 </details>
@@ -199,6 +200,7 @@ interface Ethernet1/2
 <details>
 <summary>NX-4</summary>
 <pre><code>
+feature isis
 
 </code></pre>
 </details>
@@ -206,6 +208,7 @@ interface Ethernet1/2
 <details>
 <summary>NX-6</summary>
 <pre><code>
+feature isis
 
 </code></pre>
 </details>
@@ -213,6 +216,58 @@ interface Ethernet1/2
 <details>
 <summary>NX-7</summary>
 <pre><code>
+feature isis
+ip prefix-list redistribute_list seq 5 permit 172.17.0.0/24
+route-map ISIS-redistribute permit 10
+  match ip address prefix-list redistribute_list
+vrf context management
+
+
+interface Ethernet1/1
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  isis network point-to-point
+  isis circuit-type level-1
+  ip router isis 1
+  no shutdown
+
+interface Ethernet1/2
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  isis network point-to-point
+  isis circuit-type level-1
+  ip router isis 1
+  no shutdown
+
+interface Ethernet1/3
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  isis network point-to-point
+  isis circuit-type level-1
+  ip router isis 1
+  no shutdown
+
+interface Ethernet1/4
+  no switchport
+  ip address 172.17.0.1/24
+  no shutdown
+
+  interface loopback0
+    ip address 1.1.1.5/32
+    isis circuit-type level-1
+    ip router isis 1
+  cli alias name wr copy running-config startup-config
+  line console
+  line vty
+  no feature signature-verification
+  router isis 1
+    net 49.0001.0000.0000.0005.00
+    is-type level-1
+    redistribute direct route-map ISIS-redistribute
+    log-adjacency-changes
 
 </code></pre>
 </details>
@@ -220,6 +275,59 @@ interface Ethernet1/2
 <details>
 <summary>NX-8</summary>
 <pre><code>
+feature isis
+
+ip prefix-list redistribute_list seq 5 permit 172.17.1.0/24
+route-map ISIS-redistribute permit 10
+  match ip address prefix-list redistribute_list
+vrf context management
+
+
+interface Ethernet1/1
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  isis network point-to-point
+  isis circuit-type level-1
+  ip router isis 1
+  no shutdown
+
+interface Ethernet1/2
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  isis network point-to-point
+  isis circuit-type level-1
+  ip router isis 1
+  no shutdown
+
+interface Ethernet1/3
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  isis network point-to-point
+  isis circuit-type level-1
+  ip router isis 1
+  no shutdown
+
+interface Ethernet1/4
+  no switchport
+  ip address 172.17.1.1/24
+  no shutdown
+
+  interface loopback0
+    ip address 1.1.1.6/32
+    isis circuit-type level-1
+    ip router isis 1
+  cli alias name wr copy running-config startup-config
+  line console
+  line vty
+  no feature signature-verification
+  router isis 1
+    net 49.0001.0000.0000.0006.00
+    is-type level-1
+    redistribute direct route-map ISIS-redistribute
+    log-adjacency-changes
 
 </code></pre>
 </details>
