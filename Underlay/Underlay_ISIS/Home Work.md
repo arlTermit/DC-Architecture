@@ -530,9 +530,9 @@ C        10.10.11.4/31 is directly connected, Ethernet0/2
 L        10.10.11.4/32 is directly connected, Ethernet0/2
 172.17.0.0/24 is subnetted, 2 subnets
 i L2     172.17.0.0 [115/60] via 10.10.11.3, 01:09:28, Ethernet0/1
-              [115/60] via 10.10.11.1, 01:09:28, Ethernet0/0
+                    [115/60] via 10.10.11.1, 01:09:28, Ethernet0/0
 i L2     172.17.1.0 [115/60] via 10.10.11.3, 01:09:28, Ethernet0/1
-              [115/60] via 10.10.11.1, 01:09:28, Ethernet0/0
+                    [115/60] via 10.10.11.1, 01:09:28, Ethernet0/0
 
 </code></pre>
 </details>
@@ -569,11 +569,11 @@ L        10.10.10.4/32 is directly connected, Ethernet0/2
 i L2     10.10.11.0/31 [115/50] via 10.10.10.1, 01:11:27, Ethernet0/0
 i L2     10.10.11.2/31 [115/50] via 10.10.10.3, 01:11:27, Ethernet0/1
 i L2     10.10.11.4/31 [115/50] via 10.10.10.5, 01:11:37, Ethernet0/2
-172.17.0.0/24 is subnetted, 2 subnets
+         172.17.0.0/24 is subnetted, 2 subnets
 i L2     172.17.0.0 [115/60] via 10.10.10.3, 01:11:27, Ethernet0/1
-              [115/60] via 10.10.10.1, 01:11:27, Ethernet0/0
+                  [115/60] via 10.10.10.1, 01:11:27, Ethernet0/0
 i L2     172.17.1.0 [115/60] via 10.10.10.3, 01:11:27, Ethernet0/1
-              [115/60] via 10.10.10.1, 01:11:27, Ethernet0/0
+                    [115/60] via 10.10.10.1, 01:11:27, Ethernet0/0
 
 </code></pre>
 </details>
