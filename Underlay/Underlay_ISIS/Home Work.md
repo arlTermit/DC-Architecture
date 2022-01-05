@@ -488,7 +488,7 @@ interface Ethernet1/4
 </code></pre>
 </details>
 
-Маршрутные таблицы маршрутизаторов R-1 и R-2:
+Маршрутные таблицы маршрутизаторов NXOS-4, R-1 и R-2:
 
 <details>
 <summary>show ip route R-2</summary>
@@ -568,6 +568,59 @@ i L2     172.17.0.0 [115/60] via 10.10.10.3, 01:11:27, Ethernet0/1
                   [115/60] via 10.10.10.1, 01:11:27, Ethernet0/0
 i L2     172.17.1.0 [115/60] via 10.10.10.3, 01:11:27, Ethernet0/1
                     [115/60] via 10.10.10.1, 01:11:27, Ethernet0/0
+
+</code></pre>
+</details>
+
+<details>
+<summary>show ip route NXOS-4</summary>
+<pre><code>
+1.1.1.1/32, ubest/mbest: 2/0
+    *via 10.10.10.2, Eth1/1, [115/51], 02:03:13, isis-1, L2
+    *via 10.10.11.2, Eth1/2, [115/51], 02:02:52, isis-1, L2
+1.1.1.2/32, ubest/mbest: 2/0, attached
+    *via 1.1.1.2, Lo0, [0/0], 1d23h, local
+    *via 1.1.1.2, Lo0, [0/0], 1d23h, direct
+1.1.1.3/32, ubest/mbest: 2/0
+    *via 10.10.10.2, Eth1/1, [115/51], 02:03:13, isis-1, L2
+    *via 10.10.11.2, Eth1/2, [115/51], 02:02:52, isis-1, L2
+1.1.1.4/32, ubest/mbest: 1/0
+    *via 1.1.1.4, Eth1/5, [115/80], 1d16h, isis-1, L1
+1.1.1.5/32, ubest/mbest: 1/0
+    *via 1.1.1.5, Eth1/3, [115/41], 1d16h, isis-1, L1
+1.1.1.6/32, ubest/mbest: 1/0
+    *via 1.1.1.6, Eth1/4, [115/41], 1d16h, isis-1, L1
+1.1.1.7/32, ubest/mbest: 2/0
+    *via 10.10.10.2, Eth1/1, [115/91], 02:03:13, isis-1, L2
+    *via 10.10.11.2, Eth1/2, [115/91], 02:02:52, isis-1, L2
+1.1.1.254/32, ubest/mbest: 1/0
+    *via 10.10.11.2, Eth1/2, [115/50], 02:02:52, isis-1, L2
+1.1.1.255/32, ubest/mbest: 1/0
+    *via 10.10.10.2, Eth1/1, [115/50], 02:03:13, isis-1, L2
+10.0.0.0/24, ubest/mbest: 1/0
+    *via 1.1.1.4, Eth1/5, [115/50], 1d16h, isis-1, L1
+10.0.2.0/24, ubest/mbest: 2/0
+    *via 10.10.10.2, Eth1/1, [115/100], 02:03:13, isis-1, L2
+    *via 10.10.11.2, Eth1/2, [115/100], 02:02:52, isis-1, L2
+10.10.10.0/31, ubest/mbest: 1/0
+    *via 10.10.10.2, Eth1/1, [115/50], 02:03:13, isis-1, L2
+10.10.10.2/31, ubest/mbest: 1/0, attached
+    *via 10.10.10.3, Eth1/1, [0/0], 1d23h, direct
+10.10.10.3/32, ubest/mbest: 1/0, attached
+    *via 10.10.10.3, Eth1/1, [0/0], 1d23h, local
+10.10.10.4/31, ubest/mbest: 1/0
+    *via 10.10.10.2, Eth1/1, [115/50], 02:03:13, isis-1, L2
+10.10.11.0/31, ubest/mbest: 1/0
+    *via 10.10.11.2, Eth1/2, [115/50], 02:02:52, isis-1, L2
+10.10.11.2/31, ubest/mbest: 1/0, attached
+    *via 10.10.11.3, Eth1/2, [0/0], 1d23h, direct
+10.10.11.3/32, ubest/mbest: 1/0, attached
+    *via 10.10.11.3, Eth1/2, [0/0], 1d23h, local
+10.10.11.4/31, ubest/mbest: 1/0
+    *via 10.10.11.2, Eth1/2, [115/50], 02:02:52, isis-1, L2
+172.17.0.0/24, ubest/mbest: 1/0
+    *via 1.1.1.5, Eth1/3, [115/50], 1d16h, isis-1, L1
+172.17.1.0/24, ubest/mbest: 1/0
 
 </code></pre>
 </details>
