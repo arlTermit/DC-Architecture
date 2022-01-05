@@ -641,7 +641,6 @@ VRF info: (vrf in name/id, vrf out name/id)
     1.1.1.2 17 msec
   3 1.1.1.5 33 msec 11 msec 17 msec
   4 172.17.0.2 25 msec 20 msec *
-R-10#
 
 R-10#traceroute 10.0.2.2
 Type escape sequence to abort.
