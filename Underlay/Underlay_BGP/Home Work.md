@@ -146,8 +146,6 @@ feature hsrp
 feature lacp
 feature vpc
 
-vlan 1
-
 route-map direct permit 10
   match source-protocol UNDERLAY
 
@@ -218,12 +216,125 @@ router bgp 64516
 <summary>NXOS-3</summary>
 <pre><code>
 
+feature ospf
+feature bgp
+feature interface-vlan
+feature hsrp
+feature lacp
+feature vpc
+
+route-map direct permit 1
+  match source-protocol UNDERLAY
+
+interface Ethernet1/1
+  no switchport
+  ip address 10.10.10.5/31
+  no shutdown
+
+interface Ethernet1/2
+  no switchport
+  medium p2p
+  ip address 10.3.7.0/31
+  ip router ospf UNDERLAY area 0.0.0.3
+  no shutdown
+
+interface loopback0
+  ip address 1.1.1.3/32
+  ip router ospf UNDERLAY area 0.0.0.0
+cli alias name wr copy running-config startup-config
+line console
+line vty
+boot nxos bootflash:/nxos.9.2.2.bin
+router ospf UNDERLAY
+  router-id 1.1.1.3
+  log-adjacency-changes detail
+router bgp 64513
+  router-id 1.1.1.3
+  bestpath as-path multipath-relax
+  log-neighbor-changes
+  address-family ipv4 unicast
+    network 1.1.1.3/32
+    redistribute direct route-map direct
+    maximum-paths 4
+  neighbor 10.3.7.1
+    remote-as 64514
+    address-family ipv4 unicast
+      maximum-prefix 100
+  neighbor 10.10.10.4
+    remote-as 64512
+    address-family ipv4 unicast
+      maximum-prefix 200
 </code></pre>
 </details>
 
 <details>
 <summary>NXOS-4</summary>
 <pre><code>
+LEAF-4#  show run
+
+cfs eth distribute
+feature ospf
+feature bgp
+feature interface-vlan
+feature hsrp
+feature lacp
+feature vpc
+
+
+ip prefix-list redistribute_list seq 5 permit 10.0.0.0/30
+route-map OSPF-redistribute permit 10
+  match ip address prefix-list redistribute_list
+route-map direct permit 10
+  match source-protocol direct
+vrf context management
+
+interface Ethernet1/1
+  no switchport
+  medium p2p
+  ip address 10.1.4.1/31
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  no switchport
+  ip address 10.0.0.1/30
+  no shutdown
+
+interface Ethernet1/3
+  no switchport
+  medium p2p
+  ip address 10.2.4.1/31
+  ip router ospf UNDERLAY area 0.0.0.0
+  no shutdown
+
+interface loopback0
+  ip address 1.1.1.4/32
+  ip router ospf UNDERLAY area 0.0.0.0
+cli alias name wr copy running-config startup-config
+line console
+line vty
+boot nxos bootflash:/nxos.9.2.2.bin
+router ospf UNDERLAY
+  router-id 1.1.1.4
+  redistribute direct route-map OSPF-redistribute
+  log-adjacency-changes detail
+router bgp 64517
+  router-id 1.1.1.4
+  bestpath as-path multipath-relax
+  log-neighbor-changes
+  address-family ipv4 unicast
+    network 1.1.1.4/32
+    redistribute direct route-map direct
+    maximum-paths 4
+  template peer SPINE
+    address-family ipv4 unicast
+      maximum-prefix 100
+  neighbor 10.1.4.0
+    inherit peer SPINE
+    remote-as 64515
+  neighbor 10.2.4.0
+    inherit peer SPINE
+    remote-as 64516
 
 </code></pre>
 </details>
@@ -428,14 +539,113 @@ L        10.10.10.4/32 is directly connected, Ethernet0/2
 <details>
 <summary>Маршрутная таблица с NXOS-3</summary>
 <pre><code>
-
+1.1.1.1/32, ubest/mbest: 1/0
+    *via 10.10.10.4, [20/0], 00:25:44, bgp-64513, external, tag 64512
+1.1.1.2/32, ubest/mbest: 1/0
+    *via 10.10.10.4, [20/0], 00:25:44, bgp-64513, external, tag 64512
+1.1.1.3/32, ubest/mbest: 2/0, attached
+    *via 1.1.1.3, Lo0, [0/0], 02:35:35, local
+    *via 1.1.1.3, Lo0, [0/0], 02:35:34, direct
+1.1.1.4/32, ubest/mbest: 1/0
+    *via 10.10.10.4, [20/0], 00:25:44, bgp-64513, external, tag 64512
+1.1.1.5/32, ubest/mbest: 1/0
+    *via 10.10.10.4, [20/0], 00:25:44, bgp-64513, external, tag 64512
+1.1.1.6/32, ubest/mbest: 1/0
+    *via 10.10.10.4, [20/0], 00:25:44, bgp-64513, external, tag 64512
+1.1.1.7/32, ubest/mbest: 1/0
+    *via 10.3.7.1, [20/0], 00:39:06, bgp-64513, external, tag 64514
+1.1.1.255/32, ubest/mbest: 1/0
+    *via 10.10.10.4, [20/0], 00:25:13, bgp-64513, external, tag 64512
+10.0.0.0/30, ubest/mbest: 1/0
+    *via 10.10.10.4, [20/0], 00:25:44, bgp-64513, external, tag 64512
+10.0.1.0/24, ubest/mbest: 1/0
+    *via 10.10.10.4, [20/0], 00:25:44, bgp-64513, external, tag 64512
+10.0.2.0/30, ubest/mbest: 1/0
+    *via 10.3.7.1, [20/0], 00:39:06, bgp-64513, external, tag 64514
+10.1.4.0/31, ubest/mbest: 1/0
+    *via 10.10.10.4, [20/0], 00:25:44, bgp-64513, external, tag 64512
+10.1.5.0/31, ubest/mbest: 1/0
+    *via 10.10.10.4, [20/0], 00:25:44, bgp-64513, external, tag 64512
+10.1.6.0/31, ubest/mbest: 1/0
+    *via 10.10.10.4, [20/0], 00:25:44, bgp-64513, external, tag 64512
+10.2.4.0/31, ubest/mbest: 1/0
+    *via 10.10.10.4, [20/0], 00:25:44, bgp-64513, external, tag 64512
+10.2.5.0/31, ubest/mbest: 1/0
+    *via 10.10.10.4, [20/0], 00:25:44, bgp-64513, external, tag 64512
+10.2.6.0/31, ubest/mbest: 1/0
+    *via 10.10.10.4, [20/0], 00:25:44, bgp-64513, external, tag 64512
+10.3.7.0/31, ubest/mbest: 1/0, attached
+    *via 10.3.7.0, Eth1/2, [0/0], 02:33:55, direct
+10.3.7.0/32, ubest/mbest: 1/0, attached
+    *via 10.3.7.0, Eth1/2, [0/0], 02:33:55, local
+10.10.10.4/31, ubest/mbest: 1/0, attached
+    *via 10.10.10.5, Eth1/1, [0/0], 02:33:55, direct
+10.10.10.5/32, ubest/mbest: 1/0, attached
+    *via 10.10.10.5, Eth1/1, [0/0], 02:33:55, local
 </code></pre>
 </details>
 
 <details>
 <summary>Маршрутная таблица с NXOS-4</summary>
 <pre><code>
-
+1.1.1.1/32, ubest/mbest: 1/0
+    *via 10.1.4.0, [20/0], 00:39:01, bgp-64517, external, tag 64515
+1.1.1.2/32, ubest/mbest: 1/0
+    *via 10.2.4.0, [20/0], 00:39:01, bgp-64517, external, tag 64516
+1.1.1.3/32, ubest/mbest: 2/0
+    *via 10.1.4.0, [20/0], 00:26:41, bgp-64517, external, tag 64515
+    *via 10.2.4.0, [20/0], 00:26:41, bgp-64517, external, tag 64516
+1.1.1.4/32, ubest/mbest: 2/0, attached
+    *via 1.1.1.4, Lo0, [0/0], 02:37:06, local
+    *via 1.1.1.4, Lo0, [0/0], 02:37:06, direct
+1.1.1.5/32, ubest/mbest: 2/0
+    *via 10.1.4.0, [20/0], 00:39:01, bgp-64517, external, tag 64515
+    *via 10.2.4.0, [20/0], 00:39:01, bgp-64517, external, tag 64516
+1.1.1.6/32, ubest/mbest: 2/0
+    *via 10.1.4.0, [20/0], 00:39:01, bgp-64517, external, tag 64515
+    *via 10.2.4.0, [20/0], 00:39:01, bgp-64517, external, tag 64516
+1.1.1.7/32, ubest/mbest: 2/0
+    *via 10.1.4.0, [20/0], 00:26:41, bgp-64517, external, tag 64515
+    *via 10.2.4.0, [20/0], 00:26:41, bgp-64517, external, tag 64516
+1.1.1.255/32, ubest/mbest: 2/0
+    *via 10.1.4.0, [20/0], 00:26:10, bgp-64517, external, tag 64515
+    *via 10.2.4.0, [20/0], 00:26:10, bgp-64517, external, tag 64516
+10.0.0.0/30, ubest/mbest: 1/0, attached
+    *via 10.0.0.1, Eth1/2, [0/0], 02:35:37, direct
+10.0.0.1/32, ubest/mbest: 1/0, attached
+    *via 10.0.0.1, Eth1/2, [0/0], 02:35:37, local
+10.0.1.0/24, ubest/mbest: 2/0
+    *via 10.1.4.0, [20/0], 00:39:01, bgp-64517, external, tag 64515
+    *via 10.2.4.0, [20/0], 00:39:01, bgp-64517, external, tag 64516
+10.0.2.0/30, ubest/mbest: 2/0
+    *via 10.1.4.0, [20/0], 00:26:41, bgp-64517, external, tag 64515
+    *via 10.2.4.0, [20/0], 00:26:41, bgp-64517, external, tag 64516
+10.1.4.0/31, ubest/mbest: 1/0, attached
+    *via 10.1.4.1, Eth1/1, [0/0], 02:35:37, direct
+10.1.4.1/32, ubest/mbest: 1/0, attached
+    *via 10.1.4.1, Eth1/1, [0/0], 02:35:38, local
+10.1.5.0/31, ubest/mbest: 2/0
+    *via 10.1.4.0, [20/0], 00:39:01, bgp-64517, external, tag 64515
+    *via 10.2.4.0, [20/0], 00:39:01, bgp-64517, external, tag 64516
+10.1.6.0/31, ubest/mbest: 2/0
+    *via 10.1.4.0, [20/0], 00:39:01, bgp-64517, external, tag 64515
+    *via 10.2.4.0, [20/0], 00:39:01, bgp-64517, external, tag 64516
+10.2.4.0/31, ubest/mbest: 1/0, attached
+    *via 10.2.4.1, Eth1/3, [0/0], 02:35:37, direct
+10.2.4.1/32, ubest/mbest: 1/0, attached
+    *via 10.2.4.1, Eth1/3, [0/0], 02:35:37, local
+10.2.5.0/31, ubest/mbest: 2/0
+    *via 10.1.4.0, [20/0], 00:39:01, bgp-64517, external, tag 64515
+    *via 10.2.4.0, [20/0], 00:39:01, bgp-64517, external, tag 64516
+10.2.6.0/31, ubest/mbest: 2/0
+    *via 10.1.4.0, [20/0], 00:39:01, bgp-64517, external, tag 64515
+    *via 10.2.4.0, [20/0], 00:39:01, bgp-64517, external, tag 64516
+10.3.7.0/31, ubest/mbest: 2/0
+    *via 10.1.4.0, [20/0], 00:26:41, bgp-64517, external, tag 64515
+    *via 10.2.4.0, [20/0], 00:26:41, bgp-64517, external, tag 64516
+10.10.10.4/31, ubest/mbest: 2/0
+    *via 10.1.4.0, [20/0], 00:26:41, bgp-64517, external, tag 64515
+    *via 10.2.4.0, [20/0], 00:26:41, bgp-64517, external, tag 64516
 </code></pre>
 </details>
 
