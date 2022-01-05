@@ -194,6 +194,73 @@ interface Ethernet1/2
 <pre><code>
 feature isis
 
+interface Ethernet1/1
+  no switchport
+  no ip redirects
+  ip address 10.10.10.1/31
+  no ipv6 redirects
+  isis network point-to-point
+  isis circuit-type level-2
+  ip router isis 1
+  no shutdown
+
+interface Ethernet1/2
+  no switchport
+  no ip redirects
+  ip address 10.10.11.1/31
+  no ipv6 redirects
+  isis network point-to-point
+  isis circuit-type level-2
+  ip router isis 1
+  no shutdown
+
+interface Ethernet1/3
+  no switchport
+  medium p2p
+  no ip redirects
+  ip unnumbered loopback0
+  no ipv6 redirects
+  isis network point-to-point
+  isis circuit-type level-1
+  ip router isis 1
+  no shutdown
+
+interface Ethernet1/4
+  no switchport
+  medium p2p
+  no ip redirects
+  ip unnumbered loopback0
+  no ipv6 redirects
+  isis network point-to-point
+  isis circuit-type level-1
+  ip router isis 1
+  no shutdown
+
+interface Ethernet1/5
+  no switchport
+  medium p2p
+  no ip redirects
+  ip unnumbered loopback0
+  no ipv6 redirects
+  isis network point-to-point
+  isis circuit-type level-1
+  ip router isis 1
+  no shutdown
+
+  interface loopback0
+    ip address 1.1.1.1/32
+    isis circuit-type level-2
+    ip router isis 1
+  cli alias name wr copy running-config startup-config
+  line console
+  line vty
+  no feature signature-verification
+  router isis 1
+    net 49.0001.0000.0000.0001.00
+    distribute level-1 into level-2 all
+    log-adjacency-changes
+
+
 </code></pre>
 </details>
 
@@ -202,6 +269,62 @@ feature isis
 <pre><code>
 feature isis
 
+interface Ethernet1/1
+  no switchport
+  ip address 10.10.10.3/31
+  isis network point-to-point
+  isis circuit-type level-2
+  ip router isis 1
+  no shutdown
+
+interface Ethernet1/2
+  no switchport
+  ip address 10.10.11.3/31
+  isis network point-to-point
+  isis circuit-type level-2
+  ip router isis 1
+  no shutdown
+
+interface Ethernet1/3
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  isis network point-to-point
+  isis circuit-type level-1
+  ip router isis 1
+  no shutdown
+
+interface Ethernet1/4
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  isis network point-to-point
+  isis circuit-type level-1
+  ip router isis 1
+  no shutdown
+
+interface Ethernet1/5
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  isis network point-to-point
+  isis circuit-type level-1
+  ip router isis 1
+  no shutdown
+
+  interface loopback0
+    ip address 1.1.1.2/32
+    isis circuit-type level-2
+    ip router isis 1
+  cli alias name wr copy running-config startup-config
+  line console
+  line vty
+  no feature signature-verification
+  router isis 1
+    net 49.0001.0000.0000.0002.00
+    distribute level-1 into level-2 all
+    log-adjacency-changes
+
 </code></pre>
 </details>
 
@@ -209,6 +332,47 @@ feature isis
 <summary>NX-6</summary>
 <pre><code>
 feature isis
+ip prefix-list redistribute_list seq 5 permit 10.0.0.0/24
+route-map ISIS-redistribute permit 10
+  match ip address prefix-list redistribute_list
+vrf context management
+
+interface Ethernet1/1
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  isis network point-to-point
+  isis circuit-type level-1
+  ip router isis 1
+  no shutdown
+
+interface Ethernet1/2
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  isis network point-to-point
+  isis circuit-type level-1
+  ip router isis 1
+  no shutdown
+
+interface Ethernet1/3
+  no switchport
+  ip address 10.0.0.1/24
+  no shutdown
+
+  interface loopback0
+    ip address 1.1.1.4/32
+    isis circuit-type level-1
+    ip router isis 1
+  cli alias name wr copy running-config startup-config
+  line console
+  line vty
+  no feature signature-verification
+  router isis 1
+    net 49.0001.0000.0000.0004.00
+    is-type level-1
+    redistribute direct route-map ISIS-redistribute
+    log-adjacency-changes
 
 </code></pre>
 </details>
@@ -221,7 +385,6 @@ ip prefix-list redistribute_list seq 5 permit 172.17.0.0/24
 route-map ISIS-redistribute permit 10
   match ip address prefix-list redistribute_list
 vrf context management
-
 
 interface Ethernet1/1
   no switchport
@@ -281,7 +444,6 @@ ip prefix-list redistribute_list seq 5 permit 172.17.1.0/24
 route-map ISIS-redistribute permit 10
   match ip address prefix-list redistribute_list
 vrf context management
-
 
 interface Ethernet1/1
   no switchport
