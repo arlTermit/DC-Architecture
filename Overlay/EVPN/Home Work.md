@@ -375,19 +375,6 @@ router bgp 65001
 
 Статус Leaf NSOS-1 NXOS-3 и NXOS-11:
 
-<details>
-<summary>R-1</summary>
-<pre><code>
-
-</code></pre>
-</details>
-
-<details>
-<summary>R-3</summary>
-<pre><code>
-
-</code></pre>
-</details>
 
 <details>
 <summary>NXOS-11</summary>
@@ -570,3 +557,5 @@ Peer_ip: 50.5.5.5
 
 </code></pre>
 </details>
+
+![](img/ping.png)
