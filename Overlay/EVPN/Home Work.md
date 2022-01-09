@@ -390,7 +390,7 @@ router bgp 65001
 </details>
 
 <details>
-<summary>R-11</summary>
+<summary>NXOS-11</summary>
 <pre><code>
 NX-11# show nve internal platform interface nve 1 detail
 Printing Interface ifindex 0x49000001 detail
@@ -470,6 +470,103 @@ Peer_ip: 30.3.3.3
                         30.3.3.3                          100          0 i
   *>l[3]:[0]:[32]:[50.5.5.5]/88
                         50.5.5.5                          100      32768 i
+
+</code></pre>
+</details>
+
+<details>
+<summary>NXOS-1</summary>
+<pre><code>
+
+NX-1# show nve internal platform interface nve 1 detail
+Printing Interface ifindex 0x49000001 detail
+|======|=========================|===============|===============|=====|=====|
+|Intf  |State                    |PriIP          |SecIP          |Vnis |Peers|
+|======|=========================|===============|===============|=====|=====|
+|nve1  |UP                       |10.1.1.1       |0.0.0.0        |2    |2    |
+|======|=========================|===============|===============|=====|=====|
+
+SW_BD/VNIs of interface nve1:
+================================================
+|======|======|=========================|======|====|======|========
+|Sw BD |Vni   |State                    |Intf  |Type|Vrf-ID|Notified
+|======|======|=========================|======|====|======|========
+|11    |11000 |UP                       |nve1  |CP  |0     |Yes
+|12    |12000 |UP                       |nve1  |CP  |0     |Yes
+|======|======|=========================|======|====|======|========
+
+Peers of interface nve1:
+============================================
+
+Peer_ip: 30.3.3.3
+  Peer-ID   : 1
+  State     : UP
+  Learning  : Disabled
+  TunnelID  : 0x0
+  Mode      : Symmetric
+  MAC       : 0000.0000.0000
+  Table-ID  : 0x1
+  Encap     : 0x0
+
+
+Peer_ip: 50.5.5.5
+  Peer-ID   : 2
+  State     : UP
+  Learning  : Disabled
+  TunnelID  : 0x0
+  Mode      : Symmetric
+  MAC       : 0000.0000.0000
+  Table-ID  : 0x1
+  Encap     : 0x0
+
+</code></pre>
+</details>
+
+
+<details>
+<summary>NSOS-3</summary>
+<pre><code>
+NX-3# show nve internal platform interface nve 1 detail
+Printing Interface ifindex 0x49000001 detail
+|======|=========================|===============|===============|=====|=====|
+|Intf  |State                    |PriIP          |SecIP          |Vnis |Peers|
+|======|=========================|===============|===============|=====|=====|
+|nve1  |UP                       |30.3.3.3       |0.0.0.0        |2    |2    |
+|======|=========================|===============|===============|=====|=====|
+
+SW_BD/VNIs of interface nve1:
+================================================
+|======|======|=========================|======|====|======|========
+|Sw BD |Vni   |State                    |Intf  |Type|Vrf-ID|Notified
+|======|======|=========================|======|====|======|========
+|11    |11000 |UP                       |nve1  |CP  |0     |Yes
+|12    |12000 |UP                       |nve1  |CP  |0     |Yes
+|======|======|=========================|======|====|======|========
+
+Peers of interface nve1:
+============================================
+
+Peer_ip: 10.1.1.1
+  Peer-ID   : 1
+  State     : UP
+  Learning  : Disabled
+  TunnelID  : 0x0
+  Mode      : Symmetric
+  MAC       : 0000.0000.0000
+  Table-ID  : 0x1
+  Encap     : 0x0
+
+
+Peer_ip: 50.5.5.5
+  Peer-ID   : 2
+  State     : UP
+  Learning  : Disabled
+  TunnelID  : 0x0
+  Mode      : Symmetric
+  MAC       : 0000.0000.0000
+  Table-ID  : 0x1
+  Encap     : 0x0
+
 
 </code></pre>
 </details>
