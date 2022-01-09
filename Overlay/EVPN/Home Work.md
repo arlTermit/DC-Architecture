@@ -435,11 +435,11 @@ Peer_ip: 30.3.3.3
   NX-11# show bgp l2vpn evpn summary
 
   Neighbor        V    AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
-  2.2.2.2         4 65001      88      97       29    0    0 01:14:19 2
-  4.4.4.4         4 65001      87      96       29    0    0 01:13:16 2
+  - 2.2.2.2         4 65001      88      97       29    0    0 01:14:19 2
+  - 4.4.4.4         4 65001      87      96       29    0    0 01:13:16 2
 
   NX-11# show bgp l2vpn evpn
-  
+
      Network            Next Hop            Metric     LocPrf     Weight Path
   Route Distinguisher: 1.1.1.1:32779
   *>i[2]:[0]:[0]:[48]:[0050.7966.6806]:[0]:[0.0.0.0]/216
