@@ -558,4 +558,4 @@ Peer_ip: 50.5.5.5
 </code></pre>
 </details>
 
-![](img/ping.png)
+![](img/ping2.png)
