@@ -1,11 +1,148 @@
-Цель: Настроить IS-IS для Underlay сети
+Цель:
+Настроить Overlay на основе VxLAN EVPN для L2 связанности между клиентами
 
-1. Настроить IS-IS в Underlay сети, для IP связанности между всеми устройствами NXOS.
-2. Проверка связности между сетями расположенных в одной локации, так и между локациями.
-3. Предоставить вывод таблиц маршрутизации с утройств.
+В этой  самостоятельной работе мы ожидаем, что вы самостоятельно:
+
+1. Настроить BGP peering между Leaf и Spine в AF l2vpn evpn
+2. Spine работает в качестве route-reflector
+3. Настроена связанность между клиентами в первой зоне
 
 ![](img/L2VPN.png)
 
-Пояснение. На схеме отражена распределенная сеть построенная на базе протокола IS-IS. Маршрутизаторы разбиты на три зоны. Зона Area 0 является связующей. Свзяь внутри зон Area 1 и Area 10 потроена на loopback адресах.
 
 ! В выводе убраны все настройки не относящиеся к поставленной задаче.
+
+
+Настройка BGP RR NSOS-2 NXOS-4:
+
+<details>
+<summary>NSOS-2</summary>
+<pre><code>
+NX-2# show run
+
+nv overlay evpn
+feature ospf
+feature bgp
+feature interface-vlan
+feature vn-segment-vlan-based
+feature nv overlay
+
+interface Ethernet1/1
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf UNDER area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf UNDER area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/3
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf UNDER area 0.0.0.0
+  no shutdown
+
+interface loopback0
+  ip address 2.2.2.2/32
+  ip router ospf UNDER area 0.0.0.0
+cli alias name wr copy running-config startup-config
+line console
+line vty
+boot nxos bootflash:/nxos.9.2.2.bin
+router ospf UNDER
+  router-id 2.2.2.2
+router bgp 65001
+  template peer LEAF
+    remote-as 65001
+    update-source loopback0
+    address-family l2vpn evpn
+      send-community
+      send-community extended
+      route-reflector-client
+  neighbor 1.1.1.1
+    inherit peer LEAF
+  neighbor 3.3.3.3
+    inherit peer LEAF
+  neighbor 5.5.5.5
+    inherit peer LEAF
+
+</code></pre>
+</details>
+
+<details>
+<summary>NSOS-4</summary>
+<pre><code>
+NX-4# show run
+
+nv overlay evpn
+feature ospf
+feature bgp
+feature interface-vlan
+feature vn-segment-vlan-based
+feature nv overlay
+
+interface Ethernet1/1
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf UNDER area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf UNDER area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/3
+  no switchport
+  medium p2p
+  ip unnumbered loopback0
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf UNDER area 0.0.0.0
+  no shutdown
+
+interface loopback0
+  ip address 4.4.4.4/32
+  ip router ospf UNDER area 0.0.0.0
+cli alias name wr copy running-config startup-config
+line console
+line vty
+boot nxos bootflash:/nxos.9.2.2.bin
+router ospf UNDER
+  router-id 4.4.4.4
+router bgp 65001
+  template peer LEAF
+    remote-as 65001
+    update-source loopback0
+    address-family l2vpn evpn
+      send-community
+      send-community extended
+      route-reflector-client
+  neighbor 1.1.1.1
+    inherit peer LEAF
+  neighbor 3.3.3.3
+    inherit peer LEAF
+  neighbor 5.5.5.5
+    inherit peer LEAF
+
+</code></pre>
+</details>
