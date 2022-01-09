@@ -13,7 +13,7 @@
 ! В выводе убраны все настройки не относящиеся к поставленной задаче.
 
 
-Настройка BGP RR NSOS-2 NXOS-4:
+Настройка BGP RR NSOS-2 и NXOS-4:
 
 <details>
 <summary>NSOS-2</summary>
@@ -143,6 +143,29 @@ router bgp 65001
     inherit peer LEAF
   neighbor 5.5.5.5
     inherit peer LEAF
+
+</code></pre>
+</details>
+
+Настройка BLeaf NSOS-1 NXOS-3 и NXOS-11:
+
+<details>
+<summary>NSOS-1</summary>
+<pre><code>
+
+</code></pre>
+</details>
+
+<details>
+<summary>NSOS-3</summary>
+<pre><code>
+
+</code></pre>
+</details>
+
+<details>
+<summary>NSOS-11</summary>
+<pre><code>
 
 </code></pre>
 </details>
