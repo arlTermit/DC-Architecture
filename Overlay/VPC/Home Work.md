@@ -257,3 +257,72 @@ interface nve1
 
 ! Проверка доступности маршрутизации внутри VNI
 ![](img/check-ping.png)
+
+
+Иаршрутная информация
+<details>
+<summary>NX-11</summary>
+<pre><code>
+ show ip ro vrf Vlan12-VRF
+172.17.12.1/32, ubest/mbest: 1/0
+    *via 10.1.1.1%default, [200/0], 00:58:21, bgp-65001, internal, tag 65001 (evpn) segid: 6666 tunnelid: 0xa010101 encap: VXLAN
+
+172.17.12.2/32, ubest/mbest: 1/0
+    *via 30.3.3.3%default, [200/0], 17:32:14, bgp-65001, internal, tag 65001 (evpn) segid: 6666 tunnelid: 0x1e030303 encap: VXLAN
+
+172.17.12.4/32, ubest/mbest: 1/0
+    *via 100.100.100.100%default, [200/0], 00:39:13, bgp-65001, internal, tag 65001 (evpn) segid: 6666 tunnelid: 0x64646464 encap: VXLAN
+
+172.17.122.0/24, ubest/mbest: 1/0, attached
+    *via 172.17.122.254, Vlan122, [0/0], 17:49:07, direct
+172.17.122.1/32, ubest/mbest: 1/0, attached
+    *via 172.17.122.1, Vlan122, [190/0], 17:31:59, hmm
+172.17.122.254/32, ubest/mbest: 1/0, attached
+    *via 172.17.122.254, Vlan122, [0/0], 17:49:07, local
+
+</code></pre>
+</details>
+
+<details>
+<summary>NX-3</summary>
+<pre><code>
+ show ip ro vrf Vlan12-VRF
+ 172.17.12.0/24, ubest/mbest: 1/0, attached
+    *via 172.17.12.254, Vlan12, [0/0], 18:09:06, direct
+172.17.12.1/32, ubest/mbest: 1/0
+    *via 10.1.1.1%default, [200/0], 00:59:43, bgp-65001, internal, tag 65001 (evpn) segid: 6666 tunnelid: 0xa010101 encap: VXLAN
+
+172.17.12.2/32, ubest/mbest: 1/0, attached
+    *via 172.17.12.2, Vlan12, [190/0], 17:33:36, hmm
+172.17.12.4/32, ubest/mbest: 1/0
+    *via 100.100.100.100%default, [200/0], 00:40:35, bgp-65001, internal, tag 65001 (evpn) segid: 6666 tunnelid: 0x64646464 encap: VXLAN
+
+172.17.12.254/32, ubest/mbest: 1/0, attached
+    *via 172.17.12.254, Vlan12, [0/0], 18:09:06, local
+172.17.122.1/32, ubest/mbest: 1/0
+    *via 50.5.5.5%default, [200/0], 17:33:21, bgp-65001, internal, tag 65001 (evpn) segid: 6666 tunnelid: 0x32050505 encap: VXLAN
+
+</code></pre>
+</details>
+
+<details>
+<summary>NX-1</summary>
+<pre><code>
+show ip ro vrf Vlan12-VRF
+172.17.12.0/24, ubest/mbest: 1/0, attached
+    *via 172.17.12.254, Vlan12, [0/0], 01:03:55, direct
+172.17.12.1/32, ubest/mbest: 1/0, attached
+    *via 172.17.12.1, Vlan12, [190/0], 01:00:50, hmm
+172.17.12.2/32, ubest/mbest: 1/0
+    *via 30.3.3.3%default, [200/0], 01:02:16, bgp-65001, internal, tag 65001 (evpn) segid: 6666 tunnelid: 0x1e030303 encap: VXLAN
+
+172.17.12.4/32, ubest/mbest: 1/0
+    *via 100.100.100.100%default, [200/0], 00:41:42, bgp-65001, internal, tag 65001 (evpn) segid: 6666 tunnelid: 0x64646464 encap: VXLAN
+
+172.17.12.254/32, ubest/mbest: 1/0, attached
+    *via 172.17.12.254, Vlan12, [0/0], 01:03:55, local
+172.17.122.1/32, ubest/mbest: 1/0
+    *via 50.5.5.5%default, [200/0], 01:02:16, bgp-65001, internal, tag 65001 (evpn) segid: 6666 tunnelid: 0x32050505 encap: VXLAN
+
+</code></pre>
+</details>
