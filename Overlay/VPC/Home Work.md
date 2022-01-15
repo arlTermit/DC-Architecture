@@ -254,3 +254,6 @@ interface nve1
     ingress-replication protocol bgp
 </code></pre>
 </details>
+
+! Проверка доступности маршрутизации внутри VNI
+![](img/check-ping.png)
