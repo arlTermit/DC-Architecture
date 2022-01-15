@@ -8,7 +8,121 @@
 - vlan 99 на NX-9 и NX-10.
 
 ![](img/vxlan-route.png)
-Пояснение. На схеме отражена распределенная сеть построенная на базе протокола OSPF. Все маршрутизаторы находятся в единой Area 0. Связь между сетями происходит через единый маршрутизатор R-8.
-Сеть имеет ряд недостатков:
 
 ! В выводе убраны все настройки не относящиеся к поставленной задаче.
+
+<details>
+<summary>NX-1</summary>
+<pre><code>
+
+</code></pre>
+</details>
+
+<details>
+<summary>NX-3</summary>
+<pre><code>
+
+</code></pre>
+</details>
+
+<details>
+<summary>NX-11</summary>
+<pre><code>
+
+</code></pre>
+</details>
+
+<details>
+<summary>NX-9</summary>
+<pre><code>
+
+vlan 12
+  vn-segment 12000
+vlan 99
+  name For-VXLAN-Routing
+  vn-segment 6666
+
+vrf context VPC
+vrf context Vlan12-VRF
+  vni 6666
+  address-family ipv4 unicast
+    route-target import 6666:6666
+    route-target import 6666:6666 evpn
+    route-target export 6666:6666
+    route-target export 6666:6666 evpn
+    route-target both auto
+    route-target both auto evpn
+vrf context management
+
+interface Vlan12
+  no shutdown
+  vrf member Vlan12-VRF
+  ip address 172.17.12.254/24
+  fabric forwarding mode anycast-gateway
+
+interface Vlan99
+  no shutdown
+  vrf member Vlan12-VRF
+  ip forward
+
+interface nve1
+  no shutdown
+  host-reachability protocol bgp
+  source-interface loopback1
+  member vni 6666 associate-vrf
+  member vni 11000
+    ingress-replication protocol bgp
+  member vni 12000
+    ingress-replication protocol bgp
+
+</code></pre>
+</details>
+
+<details>
+<summary>NX-10</summary>
+<pre><code>
+vlan 12
+  vn-segment 12000
+vlan 99
+  name For-VXLAN-Routing
+  vn-segment 6666
+
+vrf context VPC
+vrf context Vlan12-VRF
+  vni 6666
+  address-family ipv4 unicast
+    route-target import 6666:6666
+    route-target import 6666:6666 evpn
+    route-target export 6666:6666
+    route-target export 6666:6666 evpn
+    route-target both auto
+    route-target both auto evpn
+vrf context management
+
+interface Vlan11
+  no shutdown
+  ip address 172.17.11.254/24
+  fabric forwarding mode anycast-gateway
+
+interface Vlan12
+  no shutdown
+  vrf member Vlan12-VRF
+  ip address 172.17.12.254/24
+  fabric forwarding mode anycast-gateway
+
+interface Vlan99
+  no shutdown
+  vrf member Vlan12-VRF
+  ip forward
+
+interface nve1
+  no shutdown
+  host-reachability protocol bgp
+  source-interface loopback1
+  member vni 6666 associate-vrf
+  member vni 11000
+    ingress-replication protocol bgp
+  member vni 12000
+    ingress-replication protocol bgp
+</code></pre>
+</details>
